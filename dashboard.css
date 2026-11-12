@@ -1,0 +1,195 @@
+.dash-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 2x2 GRID GRAFIK UTAMA PADA OVERVIEW */
+.dash-grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.chart-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 20px;
+  min-height: 280px;
+}
+
+.chart-panel-body {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 0;
+  flex: 1;
+}
+
+.chart-canvas-box {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-side-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.metric-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: var(--slate);
+}
+
+.metric-header strong {
+  color: var(--dark);
+  font-weight: 700;
+}
+
+.status-chip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.panel-foot-note {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  margin-top: auto;
+  font-size: 11px;
+  color: var(--slate);
+  line-height: 1.4;
+}
+
+/* DONUT CHART */
+.donut-wrap {
+  position: relative;
+  width: 156px;
+  height: 156px;
+  flex: none;
+  margin: 0 auto;
+}
+
+.donut-wrap canvas {
+  width: 156px !important;
+  height: 156px !important;
+}
+
+.donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  padding: 18px;
+  text-align: center;
+}
+
+.donut-rank {
+  font-size: 18px;
+  font-weight: 750;
+  letter-spacing: .03em;
+  color: var(--forest);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.donut-period {
+  font-size: 10px;
+  color: var(--slate);
+  margin-top: 3px;
+}
+
+/* PERHATIAN PRIORITAS LIST */
+.attention-clean-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.attention-clean-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  transition: all .2s ease;
+}
+
+.attention-clean-item:hover {
+  background: #fff;
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.att-title-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.att-title-col strong {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--dark);
+}
+
+.att-title-col span {
+  font-size: 11px;
+  color: var(--slate);
+}
+
+.att-action-col {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .dash-grid-2x2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .chart-panel-body {
+    flex-direction: column;
+    text-align: center;
+  }
+  .attention-clean-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .att-action-col {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
