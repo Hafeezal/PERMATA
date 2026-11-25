@@ -1,0 +1,147 @@
+/* PERMATA - splash screen & animasi (sederhana, minimalis) */
+
+/* ---------- Splash logo ---------- */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  background: radial-gradient(circle at 50% 40%, #ffffff 0%, #eef8f2 100%);
+  transition: opacity .6s ease, visibility .6s ease, transform .6s ease;
+}
+
+.splash.is-hiding {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.04);
+}
+
+.splash-logo {
+  width: min(460px, 70vw);
+  height: auto;
+  opacity: 0;
+  transform: translateY(14px) scale(.94);
+  animation: splash-logo-in .9s cubic-bezier(.2, .8, .2, 1) .15s forwards;
+}
+
+.splash-bar {
+  width: 160px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(8, 123, 80, .12);
+  overflow: hidden;
+  opacity: 0;
+  animation: splash-fade .4s ease .6s forwards;
+}
+
+.splash-bar::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 40%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #83D94D, #087B50);
+  animation: splash-slide 1.1s ease-in-out infinite;
+}
+
+@keyframes splash-logo-in {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes splash-fade {
+  to { opacity: 1; }
+}
+
+@keyframes splash-slide {
+  0% { transform: translateX(-110%); }
+  100% { transform: translateX(300%); }
+}
+
+/* ---------- Transisi pindah menu ---------- */
+.view.view-enter > * {
+  animation: view-rise .55s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.view.view-enter > *:nth-child(1) { animation-delay: .00s; }
+.view.view-enter > *:nth-child(2) { animation-delay: .07s; }
+.view.view-enter > *:nth-child(3) { animation-delay: .14s; }
+.view.view-enter > *:nth-child(4) { animation-delay: .21s; }
+.view.view-enter > *:nth-child(5) { animation-delay: .28s; }
+.view.view-enter > *:nth-child(n+6) { animation-delay: .34s; }
+
+@keyframes view-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Panel/kartu: muncul bertahap + sedikit terangkat saat disentuh */
+.view.view-enter .panel,
+.view.view-enter .mon-stat {
+  animation: view-rise .55s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.panel,
+.mon-stat {
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.panel:hover,
+.mon-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Menu sidebar: geser halus */
+.nav-item {
+  transition: transform .2s ease, background-color .2s ease, color .2s ease;
+}
+
+.nav-item:hover {
+  transform: translateX(3px);
+}
+
+.nav-item.active {
+  animation: nav-pop .4s ease;
+}
+
+@keyframes nav-pop {
+  0% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+/* Bar progres tumbuh dari kiri */
+.view.view-enter .progress > *,
+.view.view-enter .bar > * {
+  transform-origin: left center;
+  animation: bar-grow .9s cubic-bezier(.2, .8, .2, 1) .15s both;
+}
+
+@keyframes bar-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Titik "terakhir diperbarui" berdenyut */
+.pulse {
+  animation: soft-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes soft-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(21, 155, 99, .45); }
+  50% { box-shadow: 0 0 0 6px rgba(21, 155, 99, 0); }
+}
+
+/* Ikon sederhana (pengganti emoji) */
+[data-lucide] {
+  stroke-width: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash, .splash * { animation-duration: .01s !important; animation-delay: 0s !important; }
+  .view.view-enter > *, .view.view-enter .panel, .view.view-enter .progress > * { animation: none !important; }
+  .nav-item, .panel, .mon-stat { transition: none; }
+}
