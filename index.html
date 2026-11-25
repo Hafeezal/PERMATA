@@ -25,7 +25,15 @@
     .splash-bar{width:160px;height:3px;border-radius:999px;background:rgba(8,123,80,.12);overflow:hidden}
     .splash-bar::after{content:'';display:block;height:100%;width:40%;border-radius:inherit;background:linear-gradient(90deg,#83D94D,#087B50);animation:sp-slide 1.1s ease-in-out infinite}
     @keyframes sp-slide{0%{transform:translateX(-110%)}100%{transform:translateX(300%)}}
-  </style>
+    /* Tampilan HP */
+    @media (max-width: 760px) {
+      html, body { overflow-x: hidden; }
+      .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .topbar-tools { flex-wrap: wrap; gap: 8px; }
+      .topbar-tools .control { flex: 1 1 140px; min-width: 0; }
+      .app-footer { flex-wrap: wrap; gap: 6px; }
+      .splash-logo { width: 78vw; }
+    }  </style>
 </head>
 <body>
   <div class="splash" id="splash" aria-hidden="true">
@@ -62,24 +70,34 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>window.Chart || document.write('<script src="assets/chart.umd.min.js"><\/script>')</script>
 
-  <!-- Skrip Sistem PERMATA -->
-  <script src="js/data.js"></script>
-  <script src="js/proper-data.js"></script>
-  <script src="js/state.js"></script>
-  <script src="js/readiness.js"></script>
-  <script src="js/components.js"></script>
-  <script src="js/charts.js"></script>
-  <script src="js/navigation.js"></script>
-  <script src="js/dashboard.js"></script>
-  <script src="js/proper.js"></script>
-  <script src="js/criteria.js"></script>
-  <script src="js/perca.js"></script>
-  <script src="js/monitoring.js"></script>
-  <script src="js/audit.js"></script>
-  <script src="js/ai-rag.js"></script>
-  <script src="js/predictive.js"></script>
-  <script src="js/motion.js"></script>
-  <script src="js/app.js"></script>
+  <!-- Skrip Sistem PERMATA
+       Dimuat berurutan. Mencoba file di folder utama dahulu, lalu folder js/ (jaga-jaga
+       jika file ter-upload di salah satu lokasi). -->
+  <script>
+    (function () {
+      var V = '20261125';
+      var files = ['data', 'proper-data', 'state', 'readiness', 'components', 'charts', 'navigation',
+        'dashboard', 'proper', 'criteria', 'perca', 'monitoring', 'audit', 'ai-rag', 'predictive', 'motion', 'app'];
+      var i = 0;
+      function next() {
+        if (i >= files.length) return;
+        var name = files[i++];
+        var paths = [name + '.js?v=' + V, 'js/' + name + '.js?v=' + V];
+        (function tryLoad(n) {
+          var s = document.createElement('script');
+          s.src = paths[n];
+          s.async = false;
+          s.onload = next;
+          s.onerror = function () {
+            if (n + 1 < paths.length) tryLoad(n + 1);
+            else { console.warn('PERMATA: gagal memuat ' + name + '.js'); next(); }
+          };
+          document.body.appendChild(s);
+        })(0);
+      }
+      next();
+    })();
+  </script>
 
   <!-- Diagnostic Helper jika script gagal termuat di hosting/Vercel -->
   <script>
